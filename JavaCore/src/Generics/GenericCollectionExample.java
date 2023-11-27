@@ -9,7 +9,7 @@ public class GenericCollectionExample {
         listString.add("This is 1st string");
         listString.add("This is 2nd string");
 
-        // Sử dụng vòng lặp for-each để lặp qua các phần tử trong listString.
+        // Sử dụng for-each để lặp qua các phần tử trong listString và lưu vào biến newlistString.
         for (String newlistString : listString) {
             System.out.println(newlistString);
         }

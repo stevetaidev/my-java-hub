@@ -18,8 +18,10 @@ public class Pair<T, U> {
     }
 
     public static void main(String[] args) {
+        // Tạo một đối tượng Pair<String, Integer> với 2 giá trị là "This is String" và 1234566789
+
         Pair<String, Integer> pair = new Pair<>("This is String", 1234566789);
-        System.out.println("First value:" + " "+ pair.getFirst());
-        System.out.println("Second value:" + " "+  pair.getSecond());
+        System.out.println("First value:" + " " + pair.getFirst());
+        System.out.println("Second value:" + " " + pair.getSecond());
     }
 }
