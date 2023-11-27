@@ -3,6 +3,7 @@ package Generics;
 public class GenericMethodExample {
     // Khởi tạo hàm generic printArray<T>, nhận một mảng các phần tử kiểu T.
     public static <T> void printArray(T[] array) {
+        // In ra các phần tử của mảng.
         for (T element : array) {
             System.out.print(element + " ");
         }
