@@ -47,11 +47,12 @@ class ArrayList<E> implements List<E> {
         // Tạo một đối tượng myList kiểu List<String> sử dụng ArrayList.
         List<String> myList = new ArrayList<>();
         myList.add("Learn Java");
-        myList.add("Learn Python");
-        myList.add("Learn C++");
-
+        myList.add("Learn C#");
+        myList.add("Learn Javascript");
 
         System.out.println("Size: " + myList.size());
-        System.out.println("Item at index 1: " + myList.get(1));
+        System.out.println("Item at index 1: " + myList.get(0));
+        System.out.println("Item at index 2: " + myList.get(1));
+        System.out.println("Item at index 3: " + myList.get(2));
     }
 }
