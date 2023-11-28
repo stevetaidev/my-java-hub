@@ -2,42 +2,50 @@ package Collections;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.LinkedList;
+
 public class ListExample {
     public static void main(String[] args) {
-        // Tạo một ArrayList để lưu trữ danh sách sản phẩm
-        List<String> productList = new ArrayList<>();
+        // Tạo một ArrayList kiểu Integer
+        List<Integer> arrayList = new ArrayList<>();
 
-        // Thêm phần tử vào danh sách
-        productList.add("Java");
-        productList.add("C#");
-        productList.add("Javascript");
-        productList.add("Python");
+        // Thêm phần tử vào ArrayList
+        arrayList.add(10);
+        arrayList.add(20);
+        arrayList.add(30);
+        arrayList.add(40);
 
-        // In ra danh sách
-        System.out.println("Nội dung của list:");
-        System.out.println(productList);
+        // In danh sách ban đầu
+        System.out.println("ArrayList ban đầu:");
+        System.out.println(arrayList);
 
-        // Truy cập phần tử bằng chỉ mục
-        String productAtIndex2 = productList.get(2);
-        System.out.println("Phần tử tại chỉ mục 2: " + productAtIndex2);
+        // Sửa đổi một phần tử trong ArrayList
+        arrayList.set(1, 25);
+        System.out.println("\nArrayList sau khi sửa đổi:");
+        System.out.println(arrayList);
 
-        // Sửa đổi sản phẩm
-        productList.set(1, "Go Lang");
-        System.out.println("Danh sách sau khi sửa đổi:");
-        System.out.println(productList);
+        // Xóa phần tử từ ArrayList
+        arrayList.remove(2);
+        System.out.println("\nArrayList sau khi xóa phần tử thứ 2:");
+        System.out.println(arrayList);
 
-        // Xóa sản phẩm
-        productList.remove(0);
-        System.out.println("Danh sách sau khi xóa phần tử đầu tiên:");
-        System.out.println(productList);
+        // Tạo một LinkedList kiểu String
+        List<String> linkedList = new LinkedList<>();
 
-        // Kiểm tra xem một phần tử có trong danh sách hay không
-        boolean containsOnePlus = productList.contains("OnePlus");
-        System.out.println("Có OnePlus trong danh sách: " + containsOnePlus);
+        // Thêm phần tử vào LinkedList
+        linkedList.add("apple");
+        linkedList.add("banana");
+        linkedList.add("cherry");
 
-        // Lấy kích thước của danh sách
-        int size = productList.size();
-        System.out.println("Số lượng phần tử trong list: " + size);
+        // In danh sách ban đầu
+        System.out.println("\nLinkedList ban đầu:");
+        System.out.println(linkedList);
+
+        // Thêm phần tử vào đầu LinkedList
+        linkedList.add(0, "grape");
+        System.out.println("\nLinkedList sau khi thêm 'grape' vào đầu:");
+        System.out.println(linkedList);
     }
 }
+
 
