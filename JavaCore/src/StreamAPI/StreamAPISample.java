@@ -10,10 +10,9 @@ public class StreamAPISample {
         // Sử dụng StreamAPI để thực hiện các thao tác trên dữ liệu
         List<Integer> evenNumbers = numbers.stream()
                 .filter(n -> n % 2 == 0)  // Lọc ra các số chẵn
-                .collect(Collectors.toList());  // Thu thập vào danh sách
+                .toList();  // Thu thập vào danh sách
 
-        Set<Integer> uniqueNumbers = numbers.stream()
-                .collect(Collectors.toSet());  // Thu thập vào tập hợp
+        Set<Integer> uniqueNumbers = new HashSet<>(numbers);  // Thu thập vào tập hợp
 
         Map<Integer, String> numberToNameMap = numbers.stream()
                 .collect(Collectors.toMap(
