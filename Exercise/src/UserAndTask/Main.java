@@ -1,56 +1,77 @@
 package UserAndTask;
-
-import java.util.*;
+import java.util.Scanner;
+import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String name = "";
-        while (true) {
-            System.out.println("Enter your name:");
-            name = scanner.nextLine();
-            if (!name.matches(".*\\d.*")) { // Validate tên người dùng có chứa số không
-                break;
-            }
-            System.out.println("Invalid Name, please try again.");
-        }
-        Person person = new Person(name);
         TaskManager taskManager = new TaskManager();
-
         while (true) {
-            // Hiển th Menu
-            System.out.println("1. Add task\n2. View user and tasks\n3. Edit task\n4. Delete task\n5. Delete user\n6. Exit");
-            int option = scanner.nextInt();
+            // Display the action menu
+            System.out.println("Please pick an action:");
+            System.out.println("1. Create user");
+            System.out.println("2. Create task");
+            System.out.println("3. View information");
+            System.out.println("4. Edit task");
+            System.out.println("5. Delete task");
+            System.out.println("6. Delete user");
+            System.out.println("7. Exit");
+
+            int choice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (option) {
+            switch (choice) {
                 case 1:
-                    System.out.println("Enter task:");
-                    String task = scanner.nextLine();
-                    taskManager.addTask(person.getId(), task); // Thêm task vào danh sách
+                    // Tạo một người dùng mới
+                    System.out.println("Enter user name:");
+                    String name = scanner.nextLine();
+                    // Kiểm tra xem tên có chứa số hay không
+                    // Nếu không chứa số trong tên, tạo người dùng mớ
+                    if (!name.matches(".*\\d.*")) {
+                        taskManager.createPerson(name);
+                    } else {
+                        System.out.println("Invalid name, please try again..");
+                    }
                     break;
                 case 2:
-                    taskManager.viewTasks(person);
+                    // Tạo một task mới
+                    System.out.println("Enter user ID:");
+                    UUID personId = UUID.fromString(scanner.nextLine());
+                    System.out.println("Enter task name:");
+                    String taskName = scanner.nextLine();
+                    taskManager.createTask(personId, taskName);
                     break;
                 case 3:
-                    System.out.println("Enter task ID:");
-                    String taskId = scanner.nextLine();
-                    System.out.println("Enter new task:");
-                    String newTask = scanner.nextLine();
-                    taskManager.editTask(person.getId(), taskId, newTask); // Chỉnh sửa task trong danh sách
+                    // Xem thông tin các task và user trong hệ thống.
+                    taskManager.viewInfo();
                     break;
                 case 4:
-                    System.out.println("Enter task ID:");
-                    String deleteTaskId = scanner.nextLine();
-                    taskManager.deleteTask(person.getId(), deleteTaskId); // Xóa task khỏi danh sách
+                    // Sửa tên của task theo ID.
+                    System.out.println("Enter the ID of the task you want to edit:");
+                    UUID taskIdToEdit = UUID.fromString(scanner.nextLine());
+                    System.out.println("Enter the new task name:");
+                    String newTaskName = scanner.nextLine();
+                    taskManager.editTask(taskIdToEdit, newTaskName);
                     break;
                 case 5:
-                    taskManager.deleteUser(person.getId()); // Xóa người dùng khỏi danh sách
+                    // Xóa một task theo ID.
+                    System.out.println("Enter the ID of the task you want to delete:");
+                    UUID taskIdToDelete = UUID.fromString(scanner.nextLine());
+                    taskManager.deleteTask(taskIdToDelete);
                     break;
                 case 6:
+                    // Xóa user theo ID.
+                    System.out.println("Enter the ID of the user you want to delete:");
+                    UUID personIdToDelete = UUID.fromString(scanner.nextLine());
+                    taskManager.deleteUser(personIdToDelete);
+                    break;
+                case 7:
+                    // Thoát khỏi chương trình.
+                    System.out.println("Exiting the program.");
                     System.exit(0);
                 default:
-                    System.out.println("Invalid option.");
+                    // Nếu lựa chọn không hợp lệ, hiển thị thông báo và yêu cầu chọn lại.
+                    System.out.println("Invalid choice. Please choose again.");
             }
         }
     }

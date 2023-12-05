@@ -3,63 +3,103 @@ package UserAndTask;
 import java.util.*;
 
 public class TaskManager {
+    private Map<UUID, Person> peopleMap = new HashMap<>();
+    private Map<UUID, Task> tasksMap = new HashMap<>();
 
-    // Lưu trữ danh sách các task theo user. Key là ID của user và value là HashMap chứa danh sách các task của người dùng đó.
-    // Vì một user sở hữu nhiều task nên ta sử dụng HashMap để lưu trữ danh sách các task của user đó.
-    private HashMap<String, HashMap<String, String>> userTasks = new HashMap<>();
-    public void addTask(String userId, String task) {
-        // Hàm thêm task vào danh sách task của user
-        // Nếu user chưa có task nào, tạo một HashMap mới để lưu trữ danh sách task của user.
-        // Nếu user đã có task, ta lấy HashMap cũ để thêm task mới vào.
-        // Sử dụng UUID.randomUUID() để tạo ID ngẫu nhiên cho task.
-        String taskId = UUID.randomUUID().toString();
-
-        // Kiểm tra xem user đã có task nào chưa, nếu chưa thì tạo một HashMap mới để lưu trữ danh sách task của user.
-        if (!userTasks.containsKey(userId)) {
-            userTasks.put(userId, new HashMap<>());
-        }
-        userTasks.get(userId).put(taskId, task);
+    public void createPerson(String name) {
+        // Tạo một đối tượng Person mới và thêm vào Map
+        Person person = new Person(name);
+        peopleMap.put(person.getId(), person);
+        System.out.println("User has been created with ID: " + person.getId());
     }
 
-    public void viewTasks(Person person) {
-
-        //Hàm hiển thị danh sách UserID, UserName, TaskID, TaskName
-
-        System.out.println("User ID: " + person.getId() + ", Name: " + person.getName());
-
-        // Kiểm tra xem user có task hay không, nếu có thì hiển thị danh sách task
-        if (userTasks.containsKey(person.getId())) {
-            // Duyệt qua danh sách task của user và in ra màn hình
-            for (Map.Entry<String, String> entry : userTasks.get(person.getId()).entrySet()) {
-                System.out.println("Task ID: " + entry.getKey() + ", Task: " + entry.getValue());
-            }
-        }
-    }
-
-
-    // Hàm chỉnh sửa task của user theo ID task và task mới.
-    public void editTask(String userId, String taskId, String newTask) {
-
-        // Kiểm tra xem ID user và ID task có tồn tại trong danh sách không
-        // Nếu có thì sửa task theo ID task và task mới.
-        if (userTasks.containsKey(userId) && userTasks.get(userId).containsKey(taskId)) {
-            userTasks.get(userId).put(taskId, newTask);
+    public void createTask(UUID personId, String taskName) {
+        // Tạo một đối tượng Task mới và thêm vào Map
+        Person person = peopleMap.get(personId);
+        // Nếu tìm thấy Person với ID đã cho, thêm Task vào Map
+        if (person != null) {
+            Task task = new Task(taskName);
+            tasksMap.put(task.getId(), task);
+            System.out.println("Task has been created with ID: " + task.getId() + " for user " + person.getName());
+            person.addTask(task.getId());
         } else {
-            System.out.println("User ID or Task ID not found.");
+            System.out.println("User with ID: " + personId + " not found.");
         }
     }
 
-    // Hàm xóa task của user theo ID task.
-    public void deleteTask(String userId, String taskId) {
-        // Kiểm tra xem ID user và ID task có tồn tại trong danh sách không
-        // Nếu có thì xóa task khỏi danh sách
-        if (userTasks.containsKey(userId)) {
-            userTasks.get(userId).remove(taskId);
+    public void viewInfo() {
+        // Hàm xem em thông tin các User và Task trong Map
+        // Sử dụng for-each để duyệt qua các entry của Map
+        for (Person person : peopleMap.values()) {
+            System.out.println("------------------------INFORMATION--------------"   );
+            System.out.println("User ID: " + person.getId());
+            System.out.println("User Name: " + person.getName());
+            System.out.println("Task Detail:");
+
+            // Lấy danh sách các Task của User hiện tại và in ra thông tin các Task đó.
+            List<UUID> userTasks = person.getTasks();
+            // Nếu danh sách không rỗng, duyệt qua danh sách và in ra thông tin các Task
+            if (!userTasks.isEmpty()) {
+                for (UUID taskId : userTasks) {
+                    Task task = tasksMap.get(taskId);
+                    if (task != null) {
+                        System.out.println("  Task ID: " + task.getId());
+                        System.out.println("  Task Name: " + task.getName());
+                        System.out.println("----------------------------"   );
+                        System.out.println(" ");
+
+                    }
+                }
+            } else {
+                System.out.println("  No tasks found for this user.");
+            }
+
+            System.out.println();
         }
     }
 
-    // Hàm xóa user theo ID.
-    public void deleteUser(String userId) {
-        userTasks.remove(userId);
+    public void editTask(UUID taskId, String taskName) {
+        // Hàm sửa thông tin một Task trong Map
+        Task task = tasksMap.get(taskId);
+        // Nếu tìm thấy Task với ID đã cho, thì sửa tên Task đó.
+        if (task != null) {
+            task.setName(taskName);
+            System.out.println("Task has been edited successfully.");
+        } else {
+            System.out.println("Task with ID: " + taskId + " not found.");
+        }
+    }
+
+    public void deleteTask(UUID taskId) {
+        // Hàm xóa một Task trong Map theo ID đã cho.
+        System.out.println("Task ID: " + taskId);
+        System.out.println("Task Name: " + tasksMap.get(taskId).getName());
+        System.out.println("Task ID: " + taskId);
+        System.out.println("Task Name: " + tasksMap.get(taskId).getName());
+        System.out.println("Task ID: " + taskId);
+        System.out.println("Task Name: " + tasksMap.get(taskId).getName());
+        System.out.println("Task ID: " + taskId);
+        Task task = tasksMap.get(taskId);
+        // Nếu tìm thấy Task với ID đã cho, thì xóa Task đó.
+        if (task != null) {
+            tasksMap.remove(taskId);
+            System.out.println("Task has been deleted successfully.");
+        } else {
+            System.out.println("Task with ID: " + taskId + " not found.");
+        }
+    }
+
+    public void deleteUser(UUID personId) {
+        // Hàm xóa một User trong Map theo ID đã cho.
+        Person person = peopleMap.get(personId);
+        // Nếu tìm thấy User với ID đã cho, thì xóa User đó.
+        if (person != null) {
+            peopleMap.remove(personId);
+            // và xóa tất cả các Task của User đó trong Map
+            tasksMap.entrySet().removeIf(entry -> entry.getKey().equals(personId));
+            System.out.println("User and their tasks have been deleted successfully.");
+        } else {
+            System.out.println("User with ID: " + personId + " not found.");
+        }
     }
 }
